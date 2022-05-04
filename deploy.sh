@@ -1,1 +1,1 @@
-docker-compose -f docker-compose-deploy.yml --build
+docker-compose  --build -f docker-compose-deploy.yml
