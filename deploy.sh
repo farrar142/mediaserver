@@ -1,1 +1,1 @@
-docker-compose up -f docker-compose-deploy.yml --force-recreate
+docker-compose up
