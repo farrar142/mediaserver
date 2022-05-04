@@ -8,7 +8,7 @@ services:
     container_name: ${CONTAINER_NAME}
     hostname: root
     volumes:
-        - ./docker_projects/nginx__1/data/site_projects/mediaserver/media:/usr/src/app/media
+        - /docker_projects/nginx__1/data/site_projects/mediaserver/media:/usr/src/app/media
     ports:
       - "${PORT}:${PORT}"
     restart: unless-stopped
