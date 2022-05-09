@@ -15,9 +15,8 @@ class OriginForm(Schema):
 
 @api.post('upload/file')
 def single_file(request, form: OriginForm = Form(...), file: UploadedFile = File(None)):
-    data = file
     uploaded: MyFiles = MyFileInfo.get_or_create(file, form.origin)
-    return {"url": uploaded.get_url, "responseTest": "test"}
+    return {"url": uploaded.get_url}
 
 
 @api.post('upload/files')
@@ -26,4 +25,6 @@ def multiple_files(request: HttpRequest, form: OriginForm = Form(...), files: Li
     for file in files:
         _file = MyFileInfo.get_or_create(file, form.origin)
         urls.append(_file.get_url)
-    return {"urls": urls, "responseTest": "test"}
+        print(_file.get_url)
+    return {"urls": urls}
+#

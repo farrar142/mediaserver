@@ -190,6 +190,6 @@ TOKEN_USE_DJANGO_AUTH = True
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [
-    'https://shopping.honeycombpizza.link']
+    'https://shopping.honeycombpizza.link', 'https://blog.honeycombpizza.link']
 #                          'http://127.0.0.1:8888', 'http://localhost:8888', '*']
 CORS_ALLOW_CREDENTIALS = True
