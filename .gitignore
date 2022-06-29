@@ -3,3 +3,7 @@ secret.py
 __pycache__
 .env
 /media
+sftp.json
+/.vscode
+.vscode
+.vscode/sftp.json

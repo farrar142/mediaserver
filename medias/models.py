@@ -59,12 +59,12 @@ class MyFileInfo(models.Model):
         key = cls.make_hash(file)
         print(key)
         res = cls.objects.filter(key=key)
-        if res.exists() and res.first():
+        if res.exists():
             fileInfo: MyFileInfo = res.first()
-            return
+            return fileInfo.file
         else:
             fileInfo: MyFileInfo = cls.create(file, origin)
-            return fileInfo
+            return fileInfo.file
 
     @classmethod
     def create(cls, _file, origin):
