@@ -3,8 +3,7 @@ version: '3.7'
 services:
   django:
     build: .
-    # command: "sh command.sh ${PORT}"
-    command : "tail -f /dev/null"
+    command: 'sh command.sh ${PORT}'
     container_name: ${CONTAINER_NAME}
     hostname: root
     volumes:
@@ -12,3 +11,34 @@ services:
     ports:
       - "${PORT}:${PORT}"
     restart: unless-stopped
+    environment:
+      TZ: 'Asia/Seoul'
+  db:
+    
+    image: 'mariadb:latest'
+    container_name: 'db'
+    ports:
+      - '3306:3306'
+    # volumes:
+    #   - /docker_projects/mariadb__1/etc:/etc/mysql
+    #   - /docker_projects/mariadb__1/run/mysqld:/run/mysqld
+    #   - /docker_projects/mariadb__1/mysql:/var/lib/mysql
+    environment:
+      MARIADB_USER: 'sandring'
+      MARIADB_ROOT_PASSWORD: 'gksdjf452@'
+      MARIADB_DATABASE: 'nginx'
+      TZ: 'Asia/Seoul'
+    restart: unless-stopped
+  redis:
+    image: redis:latest
+    command: redis-server --port 6379 --appendonly yes --requirepass gksdjf452@
+    container_name: redis
+    hostname: root
+    labels:
+      - 'name=redis'
+      - 'mode=standalone'
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+    environment:
+      TZ: 'Asia/Seoul'
