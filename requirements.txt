@@ -21,3 +21,4 @@ python-dotenv
 pillow
 django-cors-headers
 boto3
+dotenv
