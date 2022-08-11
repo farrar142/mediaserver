@@ -1,0 +1,6 @@
+*.pyc
+secret.py
+__pycache__
+.env
+/media
+.vscode

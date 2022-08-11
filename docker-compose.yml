@@ -1,0 +1,14 @@
+# redis-server.yml
+version: '3.7'
+services:
+  django:
+    build: .
+    # command: "sh command.sh ${PORT}"
+    command : "tail -f /dev/null"
+    container_name: ${CONTAINER_NAME}
+    hostname: root
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "${PORT}:${PORT}"
+    restart: unless-stopped
