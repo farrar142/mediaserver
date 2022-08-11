@@ -15,7 +15,9 @@ from pathlib import Path
 import platform
 import re
 from django.apps import apps
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
