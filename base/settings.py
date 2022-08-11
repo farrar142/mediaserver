@@ -10,9 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+import platform
 import re
-from .secret import DATABASES, REDIS_HOST
 from django.apps import apps
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,9 +89,6 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = DATABASES
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -109,6 +107,30 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SERVER = "172.17.0.1"
+HOME = SERVER
+USER = os.environ.get("DB_HOST")
+PASSWORD = os.environ.get("DB_PASSWORD")
+
+
+def ipchooser():
+    if platform.system().strip() == "Windows":
+        return HOME
+    else:
+        return SERVER
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'media',
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST': ipchooser(),
+        'PORT': '3306',
+    },
+}
+REDIS_HOST = f"redis://:{PASSWORD}@{ipchooser()}:6379/1"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

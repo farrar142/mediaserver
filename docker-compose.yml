@@ -3,7 +3,7 @@ version: '3.7'
 services:
   django:
     build: .
-    command: 'sh command.sh ${PORT}'
+    command: 'python3 manage.py runserver 0.0.0.0:${PORT}'
     container_name: ${CONTAINER_NAME}
     hostname: root
     volumes:
@@ -13,6 +13,8 @@ services:
     restart: unless-stopped
     environment:
       TZ: 'Asia/Seoul'
+    depends_on:
+      - "db"
   db:
     
     image: 'mariadb:latest'
@@ -24,14 +26,14 @@ services:
     #   - /docker_projects/mariadb__1/run/mysqld:/run/mysqld
     #   - /docker_projects/mariadb__1/mysql:/var/lib/mysql
     environment:
-      MARIADB_USER: 'sandring'
-      MARIADB_ROOT_PASSWORD: 'gksdjf452@'
-      MARIADB_DATABASE: 'nginx'
+      MARIADB_USER: '${DB_HOST}'
+      MARIADB_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MARIADB_DATABASE: 'media'
       TZ: 'Asia/Seoul'
     restart: unless-stopped
   redis:
     image: redis:latest
-    command: redis-server --port 6379 --appendonly yes --requirepass gksdjf452@
+    command: 'redis-server --port 6379 --appendonly yes --requirepass ${DB_PASSWORD}'
     container_name: redis
     hostname: root
     labels:
