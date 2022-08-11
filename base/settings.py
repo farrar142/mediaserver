@@ -109,8 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 SERVER = "172.17.0.1"
 HOME = SERVER
-USER = os.environ.get("DB_HOST")
-PASSWORD = os.environ.get("DB_PASSWORD")
+USER = os.getenv("DB_HOST")
+PASSWORD = os.getenv("DB_PASSWORD")
 
 
 def ipchooser():
