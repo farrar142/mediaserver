@@ -17,8 +17,10 @@ import re
 from django.apps import apps
 from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(
+    os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+)
 
 
 # Quick-start development settings - unsuitable for production
