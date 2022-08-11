@@ -112,6 +112,8 @@ HOME = SERVER
 USER = os.getenv("DB_HOST")
 PASSWORD = os.getenv("DB_PASSWORD")
 
+print(f"user in settings{USER}")
+
 
 def ipchooser():
     if platform.system().strip() == "Windows":
