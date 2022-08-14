@@ -28,7 +28,7 @@ load_dotenv()
 SECRET_KEY = 'django-insecure-f_n^plhx+qzzx@@wblfg1$%o#+i+n#)12!$i_(n&aqbufyg0x2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv("DEBUG", False)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -108,33 +108,23 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-SERVER = "172.17.0.1"
-HOME = SERVER
-USER = os.getenv("DB_HOST")
+HOST = os.getenv("DB_HOST")
+USER = os.getenv("DB_USER")
 PASSWORD = os.getenv("DB_PASSWORD")
 
 print(f"user in settings{USER}")
 
-
-def ipchooser():
-    if platform.system().strip() == "Windows":
-        return HOME
-    else:
-        return SERVER
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'media',
+        'NAME': os.getenv("DB_NAME"),
         'USER': USER,
         'PASSWORD': PASSWORD,
-        'HOST': ipchooser(),
+        'HOST': HOST,
         'PORT': '3306',
     },
 }
-REDIS_HOST = f"redis://:{PASSWORD}@{ipchooser()}:6379/1"
+REDIS_HOST = f"redis://:{PASSWORD}@{HOST}:6379/1"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
