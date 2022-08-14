@@ -16,14 +16,13 @@ else:
 dotenv.load_dotenv()
 
 
-
 def save_directory(origin, user, file):
     _now = now()
     year = _now.year
     month = _now.month
     day = _now.day
     # return "media/{0}/{1}/{2}/{3}/{4}".format(origin, year, month, day, file.name)
-    return f"media/{origin}/{user}/{str(uuid.uuid1())}"
+    return f"{os.getenv('MEDIA_PATH','media')}/{origin}/{user}/{str(uuid.uuid1())}"
 
 
 class MyFiles(models.Model):
@@ -33,7 +32,7 @@ class MyFiles(models.Model):
     file_path = models.CharField('파일경로', max_length=256)
     file_url = models.CharField("파일URL", max_length=256)
     origin = models.CharField("출처", max_length=100, default="default")
-    is_valid = models.BooleanField("인증 완료됨",default=False)
+    is_valid = models.BooleanField("인증 완료됨", default=False)
     s3_client = boto3.client(
         's3',
         aws_access_key_id=os.getenv('BOTO3_ACCESS_KEY_ID'),
@@ -54,11 +53,10 @@ class MyFiles(models.Model):
             origin=origin,
             title=file.name, file_path=file_path, file_url=file_url)
         return uploaded
-    
-    def delete(self,using=None, keep_parents=False):
+
+    def delete(self, using=None, keep_parents=False):
         file_upload.delete_by_path(self.file_path)
         return super().delete(using=None, keep_parents=False)
-        
 
 
 class MyFileInfo(models.Model):
